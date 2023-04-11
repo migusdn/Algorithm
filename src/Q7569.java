@@ -49,10 +49,12 @@ class Q7569 {
                 }
             }
         }
-        if(ripeTomato+emptyTomato==h*n*m){
-            System.out.println(answer);
-        }else {
+        if (ripeTomato + emptyTomato == h * n * m) {
+            bw.write(String.valueOf(answer));
+        } else {
             while (!(Q1.isEmpty() && Q2.isEmpty())) {
+                if(unripeTomato==0)
+                    break;
                 Queue<Integer> curQ;
                 Queue<Integer> nextQ;
                 if (Q2.isEmpty()) {
@@ -67,24 +69,51 @@ class Q7569 {
                     z = curQ.poll();
                     x = curQ.poll();
                     y = curQ.poll();
-                    System.out.println(z+" "+x+" "+y);
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 4; j++) {
-                            int nz = z + dz[i];
-                            int nx = x + dx[j];
-                            int ny = y + dy[j];
-                            if (nx < 0 || nx >= n || ny < 0 || ny >= m || nz < 0 || nz >= h) continue;
-                            if (tomatoes[nz][nx][ny] == 0) {
-                                unripeTomato--;
-                                tomatoes[nz][nx][ny] = 1;
-                                nextQ.offer(nz);
-                                nextQ.offer(nx);
-                                nextQ.offer(ny);
-                            }
+//                    System.out.println("current" + z + " " + x + " " + y);
+
+                    for (int j = 0; j < 4; j++) {
+                        int nz = z;
+                        int nx = x + dx[j];
+                        int ny = y + dy[j];
+                        if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                        if (tomatoes[nz][nx][ny] == 0) {
+//                            System.out.println("target" + nz + " " + nx + " " + ny);
+                            unripeTomato--;
+                            tomatoes[nz][nx][ny] = 1;
+                            nextQ.offer(nz);
+                            nextQ.offer(nx);
+                            nextQ.offer(ny);
+                        }
+                    }
+                    if(z-1 >= 0){
+                        if(tomatoes[z-1][x][y]==0) {
+                            unripeTomato--;
+                            tomatoes[z-1][x][y]=1;
+                            nextQ.offer(z-1);
+                            nextQ.offer(x);
+                            nextQ.offer(y);
+                        }
+                    }
+                    if(z+1 < h){
+                        if(tomatoes[z+1][x][y]==0) {
+                            unripeTomato--;
+                            tomatoes[z+1][x][y]=1;
+                            nextQ.offer(z+1);
+                            nextQ.offer(x);
+                            nextQ.offer(y);
                         }
                     }
 
+
                 }
+//                for(int i=0; i<h; i++){
+//                    for(int j=0; j<n; j++){
+//                        for(int k=0; k<m; k++){
+//                            System.out.print(tomatoes[i][j][k]+" ");
+//                        }
+//                        System.out.println("");
+//                    }
+//                }
                 answer++;
             }
             if (unripeTomato != 0)
