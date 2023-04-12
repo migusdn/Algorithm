@@ -9,6 +9,7 @@ public class Q2281 {
         int n,m;
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
+        int[] nameLength = new int[n];
 
 
 

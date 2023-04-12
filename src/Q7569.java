@@ -9,10 +9,10 @@ class Q7569 {
         int m, n, h;
         int[] dx = {0, 1, 0, -1};
         int[] dy = {1, 0, -1, 0};
-        int[] dz = {-1, 0, 1};
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        //다른 토마토에 영향을 줄 토마토의 좌표를 담은 Queue, 걸린 소요시간을 카운팅하기위해 2개 선언
         Queue<Integer> Q1 = new LinkedList<>();
         Queue<Integer> Q2 = new LinkedList<>();
         m = Integer.parseInt(st.nextToken());
@@ -34,6 +34,7 @@ class Q7569 {
                             unripeTomato++;
                             break;
                         }
+                        //익은 경우 ripeTomato를 1증가시키고 Queue에 추가한다.
                         case 1: {
                             ripeTomato++;
                             Q1.offer(i);
@@ -49,6 +50,7 @@ class Q7569 {
                 }
             }
         }
+        //익은 토마토와 빈칸의 합이 H * N * M 이면 이미 다 익은 상태
         if (ripeTomato + emptyTomato == h * n * m) {
             bw.write(String.valueOf(answer));
         } else {
@@ -69,8 +71,6 @@ class Q7569 {
                     z = curQ.poll();
                     x = curQ.poll();
                     y = curQ.poll();
-//                    System.out.println("current" + z + " " + x + " " + y);
-
                     for (int j = 0; j < 4; j++) {
                         int nz = z;
                         int nx = x + dx[j];
@@ -103,17 +103,7 @@ class Q7569 {
                             nextQ.offer(y);
                         }
                     }
-
-
                 }
-//                for(int i=0; i<h; i++){
-//                    for(int j=0; j<n; j++){
-//                        for(int k=0; k<m; k++){
-//                            System.out.print(tomatoes[i][j][k]+" ");
-//                        }
-//                        System.out.println("");
-//                    }
-//                }
                 answer++;
             }
             if (unripeTomato != 0)
